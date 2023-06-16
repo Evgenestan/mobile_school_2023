@@ -1,23 +1,41 @@
 import 'package:flutter/material.dart';
 
 void main() {
-  runApp(const WhiteScreen());
+  runApp(MaterialApp(home: const NumbersList()));
 }
 
-class WhiteScreen extends StatelessWidget {
-  const WhiteScreen({Key? key}) : super(key: key);
+class NumbersList extends StatelessWidget {
+  const NumbersList({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
-    return Center(
-      child: Container(
-        color: Colors.white,
-        child: Container(
-          color: Colors.red,
-          height: 100,
-          width: 100,
-        ),
-      ),
+    return Column(
+      children: [
+        ...List.generate(
+            10,
+            (index) => Card(
+                  child: Container(
+                    height: 50,
+                    alignment: Alignment.center,
+                    child: Text(
+                      index.toString(),
+                      textAlign: TextAlign.center,
+                    ),
+                  ),
+                )),
+        Expanded(
+          child: Align(
+            alignment: Alignment.bottomCenter,
+            child: Padding(
+              padding: const EdgeInsets.only(bottom: 50),
+              child: ElevatedButton(
+                onPressed: () {},
+                child: const Text('ElevatedButton'),
+              ),
+            ),
+          ),
+        )
+      ],
     );
   }
 }
