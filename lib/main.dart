@@ -1,23 +1,23 @@
 import 'package:flutter/material.dart';
 
 void main() {
-  runApp(const TwoSquares());
+  runApp(const WhiteScreen());
 }
 
-class TwoSquares extends StatelessWidget {
-  const TwoSquares({Key? key}) : super(key: key);
+class WhiteScreen extends StatelessWidget {
+  const WhiteScreen({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
-    return Column(
-      children: [
-        Container(
-          color: Colors.green,
-        ),
-        Container(
+    return Center(
+      child: Container(
+        color: Colors.white,
+        child: Container(
           color: Colors.red,
+          height: 100,
+          width: 100,
         ),
-      ],
+      ),
     );
   }
 }
