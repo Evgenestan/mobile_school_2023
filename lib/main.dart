@@ -28,45 +28,52 @@ class MyHomePage extends StatefulWidget {
 }
 
 class _MyHomePageState extends State<MyHomePage> {
-  bool _reverse = false;
+  bool _showFrame = false;
 
-  void _swapChildren() {
+  final _globalKey = GlobalKey();
+
+  void _changeFrame() {
     context;
     setState(() {
-      _reverse = !_reverse;
+      _showFrame = !_showFrame;
     });
   }
 
+  late final _children = [
+    Expanded(
+      child: const Colored(),
+    ),
+  ];
+
   @override
   Widget build(BuildContext context) {
-    final _children = [
-      Expanded(
-        child: Colored(),
+    Widget body = SizedBox(
+      child: Column(
+        mainAxisAlignment: MainAxisAlignment.center,
+        children: _children,
       ),
-      Expanded(
-        child: Colored(),
-      ),
-    ];
-    final List<Widget> children;
-    if (_reverse) {
-      children = _children.toList();
-    } else {
-      children = _children.reversed.toList();
+    );
+
+    if (_showFrame) {
+      body = DecoratedBox(
+        decoration: BoxDecoration(
+          border: Border.all(
+            color: Colors.red,
+            width: 5,
+          ),
+        ),
+        child: body,
+      );
     }
+
     return Scaffold(
       appBar: AppBar(
         title: Text(widget.title),
       ),
-      body: SizedBox(
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: children,
-        ),
-      ),
+      body: body,
       floatingActionButton: FloatingActionButton(
-        onPressed: _swapChildren,
-        tooltip: 'Swap',
-        child: const Icon(Icons.swap_horiz),
+        onPressed: _changeFrame,
+        child: const Icon(Icons.square_outlined),
       ), // This trailing comma makes auto-formatting nicer for build methods.
     );
   }
@@ -80,12 +87,24 @@ class Colored extends StatefulWidget {
 }
 
 class _ColoredState extends State<Colored> {
-  late var _color = Color(hashCode);
+  late final _color = Color(hashCode);
 
   @override
   void initState() {
     super.initState();
     print('initState $hashCode');
+  }
+
+  @override
+  void activate() {
+    print('activate $hashCode');
+    super.activate();
+  }
+
+  @override
+  void deactivate() {
+    print('deactivate $hashCode');
+    super.deactivate();
   }
 
   @override
