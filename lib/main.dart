@@ -1,29 +1,38 @@
 import 'package:flutter/material.dart';
 
+import 'colorful_app_bar.dart';
+
 void main() {
-  runApp(MaterialApp(home: const NumbersList()));
+  runApp(MaterialApp(home: const NumbersSliverList()));
 }
 
-class NumbersList extends StatelessWidget {
-  const NumbersList({Key? key}) : super(key: key);
+class NumbersSliverList extends StatelessWidget {
+  const NumbersSliverList({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
-    return Column(
-      children: [
-        ...List.generate(
-            10,
-            (index) => Card(
-                  child: Container(
-                    height: 50,
-                    alignment: Alignment.center,
-                    child: Text(
-                      index.toString(),
-                      textAlign: TextAlign.center,
-                    ),
+    return CustomScrollView(
+      slivers: [
+        SliverPadding(
+          padding: const EdgeInsets.only(top: 50),
+          sliver: SliverList(
+            delegate: SliverChildBuilderDelegate(
+              (ctx, i) => Card(
+                child: Container(
+                  height: 50,
+                  alignment: Alignment.center,
+                  child: Text(
+                    i.toString(),
+                    textAlign: TextAlign.center,
                   ),
-                )),
-        Expanded(
+                ),
+              ),
+              childCount: 50,
+            ),
+          ),
+        ),
+        SliverFillRemaining(
+          hasScrollBody: false,
           child: Align(
             alignment: Alignment.bottomCenter,
             child: Padding(
